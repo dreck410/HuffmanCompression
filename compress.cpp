@@ -2,6 +2,7 @@
 #include <vector>
 #include <queue>
 #include <iostream>
+#include <string>
 #include <stdlib.h>
 #include <math.h>
 #include <map>
@@ -39,10 +40,10 @@ bool getCounts(const char *filename, std::vector<unsigned long long int> &counts
 
 
 std::vector<int> getEncoding(char c, map<char, string> &binAssociation, int &sizeOfCode){
-//	unsigned long long int toWrite = 0;
+	//	unsigned long long int toWrite = 0;
 	string bEncoding = binAssociation[c];
 	int bEncodingSize = bEncoding.size();
-//	char bitArry[bEncodingSize];
+	//	char bitArry[bEncodingSize];
 	std::vector<int> bitVect;
 	bitVect.resize(bEncodingSize);
 
@@ -59,7 +60,7 @@ std::vector<int> getEncoding(char c, map<char, string> &binAssociation, int &siz
 	//	toWrite = toWrite << 1;
 		++sizeOfCode;
 	}
-//	toWrite = toWrite >> 1;
+	//	toWrite = toWrite >> 1;
 	return bitVect;
 	//return toWrite;
 }
@@ -71,7 +72,7 @@ void compress( unsigned long long int binSize, map<char, string> &binAssociation
 		if((binSize % 8 != 0)){
 			buffSize = 8 - (binSize % 8);
 		}
-
+		string fname = filename;
 		unsigned long long int toPrintSize = 1 + ceil(((buffSize + binSize)/8));
 		unsigned int toPrint = 0;
 	//std::cout << "To Print Size in bytes " << toPrintSize << '\n';
@@ -82,7 +83,7 @@ void compress( unsigned long long int binSize, map<char, string> &binAssociation
 		char buffSizeArray[1];
 		buffSizeArray[0] = buffSize;
     	ofstream compressFile;
-    	compressFile.open ("compressed.bin", ios::out | ios::binary);
+    	compressFile.open (fname + ".bin", ios::out | ios::binary);
 		// LittleEndian so it writes it backwards....
 		compressFile.write(buffSizeArray, 1);
 		compressFile.close();
@@ -141,7 +142,7 @@ void compress( unsigned long long int binSize, map<char, string> &binAssociation
 
 	//std::cout << "Bits " << bit7 << bit6 << bit5 << bit4 << bit3 << bit2 << bit1 << bit0 << '\n';
 	//std::cout << "To Write " << toWrite << '\n';
-					compressFile.open ("compressed.bin", ios::out | ios::binary | ios::app);
+					compressFile.open (fname + ".bin", ios::out | ios::binary | ios::app);
 					unsigned char bits = toWrite;
 
 					compressFile << bits;
@@ -160,7 +161,7 @@ void compress( unsigned long long int binSize, map<char, string> &binAssociation
 			}
 			finalBits = finalBits >> 1;
 	//std::cout << "Extra " << finalBits << '\n';
-			compressFile.open ("compressed.bin", ios::out | ios::binary | ios::app);
+			compressFile.open (fname + ".bin", ios::out | ios::binary | ios::app);
 			unsigned char bits = finalBits;
 
 			compressFile << bits;

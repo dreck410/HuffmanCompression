@@ -5,6 +5,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <map>
+#include <string>
 #include <stdio.h>
 #include <fstream>
 #include <queue>          // std::priority_queue
@@ -67,7 +68,7 @@ bool getCounts(const char *filename, std::vector<unsigned long long int> &counts
 int main(int argc, char const *argv[])
 {
 	
-
+	string fileName = argv[1];
 	vector<unsigned long long int> charFreq;
 	if ( (getCounts("compressKey.huf", charFreq)) ) {
 		// next stepcharFreq
@@ -99,7 +100,7 @@ int main(int argc, char const *argv[])
 		root = minPQ.top(); 
 
 		int size = 0;
-		ifstream compressedFile ("compressed.bin", ios::in | ios::binary | ios::ate );
+		ifstream compressedFile (fileName, ios::in | ios::binary | ios::ate );
 		compressedFile.seekg(0, ios::end);
 		int sizeOfCompressedFile = compressedFile.tellg();
 		compressedFile.seekg(0,ios::beg);
